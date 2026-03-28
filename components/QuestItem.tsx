@@ -12,20 +12,20 @@ interface Props {
 type Variant = "plain" | "highlight" | "underline" | "tilted";
 const VARIANTS: Variant[] = ["highlight", "plain", "underline", "plain", "tilted", "plain"];
 
-// Playfair Display italic is the star — editorial, magazine-quality
-// Mix with Special Elite for a couple items to feel cut-from-different-sources
+// Playfair Display italic is the editorial anchor for the whole list.
+// Vary only weight and size — not the font family. Consistency > chaos here.
 const ITEM_STYLES = [
-  { font: "'Playfair Display', serif", size: "22px", weight: 700, italic: true  },
-  { font: "'Special Elite', cursive",  size: "18px", weight: 400, italic: false },
-  { font: "'Playfair Display', serif", size: "24px", weight: 400, italic: true  },
-  { font: "'Libre Baskerville', serif",size: "19px", weight: 700, italic: false },
-  { font: "'Playfair Display', serif", size: "21px", weight: 700, italic: true  },
-  { font: "'Courier Prime', monospace",size: "17px", weight: 400, italic: false },
-  { font: "'Playfair Display', serif", size: "23px", weight: 400, italic: true  },
-  { font: "'Special Elite', cursive",  size: "19px", weight: 400, italic: false },
+  { size: "23px", weight: 700, italic: true  },
+  { size: "19px", weight: 400, italic: true  },
+  { size: "25px", weight: 400, italic: true  },
+  { size: "20px", weight: 700, italic: true  },
+  { size: "22px", weight: 400, italic: true  },
+  { size: "21px", weight: 700, italic: true  },
+  { size: "24px", weight: 400, italic: true  },
+  { size: "20px", weight: 700, italic: true  },
 ];
 
-// Deep, printed ink colors — not pastel
+// Deep editorial ink colors — like a printed magazine, not pastel
 const ITEM_COLORS = [
   "#5a1d6e",
   "#7a1a2a",
@@ -44,7 +44,7 @@ export default function QuestItem({ quest, index, onToggleComplete, onDelete }: 
   const style   = ITEM_STYLES[index % ITEM_STYLES.length];
   const color   = ITEM_COLORS[index % ITEM_COLORS.length];
   const sticker = STICKERS[index % STICKERS.length];
-  const tiltDeg = variant === "tilted" ? (index % 2 === 0 ? -0.7 : 0.7) : 0;
+  const tiltDeg = variant === "tilted" ? (index % 2 === 0 ? -0.6 : 0.6) : 0;
 
   const completedDate = quest.completedAt
     ? new Date(quest.completedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })
@@ -70,20 +70,20 @@ export default function QuestItem({ quest, index, onToggleComplete, onDelete }: 
         </span>
 
         {/* text block */}
-        <div className="flex-1 relative">
+        <div className="flex-1 relative min-w-0">
           <button
             onClick={onToggleComplete}
-            className="text-left w-full cursor-pointer leading-snug"
+            className="text-left w-full cursor-pointer leading-snug focus:outline-none"
             style={{
-              fontFamily: style.font,
+              fontFamily: "'Playfair Display', serif",
               fontSize: style.size,
               fontWeight: style.weight,
-              fontStyle: style.italic ? "italic" : "normal",
-              color: quest.completed ? "#bbb" : color,
+              fontStyle: "italic",
+              color: quest.completed ? "#ccc" : color,
               textDecoration: quest.completed ? "line-through" : "none",
-              textDecorationColor: "rgba(160,40,60,0.4)",
+              textDecorationColor: "rgba(160,40,60,0.35)",
               textDecorationThickness: "2px",
-              transition: "color 0.2s, opacity 0.2s",
+              transition: "color 0.2s",
             }}
           >
             {variant === "highlight" && !quest.completed ? (
@@ -99,12 +99,12 @@ export default function QuestItem({ quest, index, onToggleComplete, onDelete }: 
           {/* underline variant */}
           {variant === "underline" && !quest.completed && (
             <div
-              className="absolute bottom-0 left-0 right-6 h-[1.5px] rounded-full"
-              style={{ background: color, opacity: 0.25 }}
+              className="absolute -bottom-0.5 left-0 right-6 h-[1.5px] rounded-full"
+              style={{ background: color, opacity: 0.2 }}
             />
           )}
 
-          {/* completion date memory */}
+          {/* completion memory */}
           {quest.completed && completedDate && (
             <motion.p
               initial={{ opacity: 0, y: 3 }}
@@ -120,13 +120,13 @@ export default function QuestItem({ quest, index, onToggleComplete, onDelete }: 
         </div>
 
         {/* emoji + delete */}
-        <div className="flex items-center gap-1.5 pt-1 flex-shrink-0">
+        <div className="flex items-center gap-1.5 pt-1.5 flex-shrink-0">
           <span className="text-[17px] float" style={{ animationDelay: `${index * 0.2}s` }}>
             {quest.emoji || sticker}
           </span>
           <button
             onClick={onDelete}
-            className="opacity-0 group-hover:opacity-25 hover:!opacity-60 text-gray-500 text-xs transition-opacity"
+            className="opacity-0 group-hover:opacity-25 hover:!opacity-60 text-gray-500 text-xs transition-opacity focus:outline-none"
             aria-label="delete"
           >
             ✕
