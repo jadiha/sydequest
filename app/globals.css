@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-from: #f9c8d9;
+  --bg-to: #e8d4f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f9c8d9 0%, #e8d4f5 50%, #ffd6a5 100%);
+  background-attachment: fixed;
+}
+
+/* ── Paper card ─────────────────────────────────────────── */
+.paper {
+  background-color: #fffef5;
+  background-image: linear-gradient(
+    #fffef5 0px,
+    #fffef5 27px,
+    #cfe0f5 27px,
+    #cfe0f5 28px
+  );
+  background-size: 100% 28px;
+  position: relative;
+}
+
+.paper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 52px;
+  width: 2px;
+  background: rgba(255, 140, 150, 0.35);
+  pointer-events: none;
+}
+
+/* Washi tape at top */
+.paper-tape::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1.5deg);
+  width: 90px;
+  height: 28px;
+  background: rgba(255, 215, 100, 0.55);
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+/* ── Quest item strikethrough ────────────────────────────── */
+.quest-done {
+  text-decoration: line-through;
+  text-decoration-thickness: 2.5px;
+  opacity: 0.4;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-4px) rotate(4deg); }
+}
+
+@keyframes pop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.35); }
+  100% { transform: scale(1); }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50%       { transform: rotate(2deg); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(16px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.float { animation: float 3.5s ease-in-out infinite; }
+.wiggle { animation: wiggle 2s ease-in-out infinite; }
+.slide-up { animation: slideUp 0.3s ease; }
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(180, 140, 200, 0.4); border-radius: 99px; }
