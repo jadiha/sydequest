@@ -75,8 +75,8 @@ export default function AddQuestModal({ open, onClose, onAdd }: Props) {
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                     placeholder="wear PJs to the movies..."
-                    style={{ fontFamily: "'Kalam', cursive" }}
-                    className="w-full text-[22px] text-purple-800 bg-transparent outline-none placeholder:text-gray-200"
+                    style={{ fontFamily: "'Playfair Display', serif", fontStyle: "italic" }}
+                    className="w-full text-[22px] text-[#5a1d6e] bg-transparent outline-none placeholder:text-gray-200"
                     autoFocus
                   />
                 </div>

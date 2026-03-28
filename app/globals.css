@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Boogaloo&family=Fredoka+One&family=Fugaz+One&family=Lilita+One&family=Lobster&family=Oswald:wght@700&family=Playfair+Display:ital,wght@0,700;1,700&family=Righteous&family=Titan+One&family=Ultra&family=Caveat:wght@400;600;700&family=Kalam:wght@400;700&family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Oswald:wght@600;700&family=Anton&family=Abril+Fatface&family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Libre+Baskerville:ital,wght@0,700;1,400&family=UnifrakturMaguntia&family=Caveat:wght@700&family=Patrick+Hand&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,44 +6,49 @@
 
 * { box-sizing: border-box; }
 
+/* ── Gingham background ─────────────────────────────────── */
 body {
   min-height: 100vh;
-  background: #fde8f0;
+  background-color: #f9dde8;
   background-image:
-    radial-gradient(ellipse at 15% 10%, #f8d0e8 0%, transparent 55%),
-    radial-gradient(ellipse at 85% 80%, #e8d0f8 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 50%, #fde8f0 0%, transparent 80%);
+    repeating-linear-gradient(
+      90deg,
+      rgba(210, 130, 155, 0.22) 0px,
+      rgba(210, 130, 155, 0.22) 32px,
+      transparent 32px,
+      transparent 64px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(210, 130, 155, 0.22) 0px,
+      rgba(210, 130, 155, 0.22) 32px,
+      transparent 32px,
+      transparent 64px
+    );
   background-attachment: fixed;
 }
 
-/* paper grain overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ── Paper ─────────────────────────────────── */
+/* ── Paper ─────────────────────────────────────────────── */
 .paper {
-  background: #fffaf0;
+  background: #fffcf5;
   position: relative;
 }
+
+/* paper grain */
 .paper::after {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
   pointer-events: none;
   border-radius: inherit;
+  z-index: 0;
 }
 
-/* lined paper effect */
+/* lined paper */
 .paper-lined {
   background-image:
-    linear-gradient(#fffaf0 0px, #fffaf0 27px, #cfe0f5 27px, #cfe0f5 28px);
+    linear-gradient(#fffcf5 0px, #fffcf5 27px, #d8e8f8 27px, #d8e8f8 28px);
   background-size: 100% 28px;
 }
 .paper-lined::before {
@@ -52,83 +57,73 @@ body::before {
   top: 0; bottom: 0;
   left: 52px;
   width: 2px;
-  background: rgba(255, 140, 150, 0.3);
+  background: rgba(220, 120, 140, 0.25);
   pointer-events: none;
+  z-index: 1;
 }
 
 /* washi tape */
 .washi-tape::before {
   content: '';
   position: absolute;
-  top: -13px;
+  top: -14px;
   left: 50%;
-  transform: translateX(-50%) rotate(-1.5deg);
-  width: 88px;
-  height: 26px;
-  background: rgba(255, 210, 90, 0.55);
+  transform: translateX(-50%) rotate(-1.2deg);
+  width: 92px;
+  height: 28px;
+  background: rgba(255, 200, 80, 0.6);
   border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
   z-index: 10;
 }
 
-/* ── Cut-out letter chip ─────────────────── */
+/* ── Cut-out letter chip ────────────────────────────────── */
 .letter-chip {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 3px;
-  padding: 1px 3px;
   line-height: 1;
-  font-weight: 700;
   user-select: none;
+  /* physical lift */
+  filter: drop-shadow(2px 3px 0px rgba(0,0,0,0.22));
 }
 
-/* ── Animations ──────────────────────────── */
+/* ── Quest item highlight variant ───────────────────────── */
+.quest-highlight mark {
+  background: rgba(255, 224, 80, 0.5);
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: inherit;
+}
+
+/* ── Completion memory overlay ──────────────────────────── */
+.completion-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 160, 190, 0.15);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  50%       { transform: translateY(-5px) rotate(5deg); }
+  50%       { transform: translateY(-5px) rotate(4deg); }
 }
 @keyframes wiggle {
   0%, 100% { transform: rotate(-2deg); }
   50%       { transform: rotate(2deg); }
 }
 @keyframes slideUp {
-  from { transform: translateY(14px); opacity: 0; }
+  from { transform: translateY(12px); opacity: 0; }
   to   { transform: translateY(0);    opacity: 1; }
 }
-@keyframes stamp {
-  0%   { transform: scale(1.4) rotate(-3deg); opacity: 0; }
-  60%  { transform: scale(0.95) rotate(1deg); opacity: 1; }
-  100% { transform: scale(1) rotate(0deg); opacity: 1; }
-}
-@keyframes inkWrite {
-  from { clip-path: inset(0 100% 0 0); }
-  to   { clip-path: inset(0 0% 0 0); }
-}
 
-.float   { animation: float 3.5s ease-in-out infinite; }
-.wiggle  { animation: wiggle 2s ease-in-out infinite; }
+.float    { animation: float 3.5s ease-in-out infinite; }
+.wiggle   { animation: wiggle 2s ease-in-out infinite; }
 .slide-up { animation: slideUp 0.25s ease; }
 
-/* ── Highlight variant ───────────────────── */
-.quest-highlight mark {
-  background: rgba(255, 229, 100, 0.55);
-  border-radius: 4px;
-  padding: 1px 4px;
-  color: inherit;
-}
-
-/* ── Completion overlay ──────────────────── */
-.completion-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 180, 200, 0.18);
-  border-radius: 6px;
-  pointer-events: none;
-  animation: stamp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* scrollbar */
+/* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(180,140,200,0.35); border-radius: 99px; }
+::-webkit-scrollbar-thumb { background: rgba(180,120,140,0.35); border-radius: 99px; }

@@ -91,7 +91,7 @@ export default function QuestPaper({ quests, friends, userName, termLabel, onTog
 
       {/* progress footer */}
       <div className="relative z-10 mt-5 pl-8">
-        <p style={{ fontFamily: "'Caveat', cursive" }} className="text-[13px] text-gray-300">
+        <p style={{ fontFamily: "'Special Elite', cursive" }} className="text-[13px] text-gray-300">
           {done === 0
             ? `0 / ${total} ✦ let's gooo!!`
             : done === total && total > 0
@@ -100,29 +100,6 @@ export default function QuestPaper({ quests, friends, userName, termLabel, onTog
         </p>
       </div>
 
-      {/* friend interest summary */}
-      {friends.some(f => quests.some(q => q.interestedFriendIds.includes(f.id))) && (
-        <div className="relative z-10 mt-3 pt-3 border-t border-dashed border-pink-100 pl-8">
-          <p style={{ fontFamily: "'Patrick Hand', cursive" }} className="text-[12px] text-gray-400 mb-1.5">
-            who&apos;s interested:
-          </p>
-          <div className="flex gap-1.5 flex-wrap">
-            {friends.map(f => {
-              const count = quests.filter(q => q.interestedFriendIds.includes(f.id)).length;
-              if (!count) return null;
-              return (
-                <span
-                  key={f.id}
-                  style={{ fontFamily: "'Patrick Hand', cursive" }}
-                  className="text-[12px] px-2 py-0.5 rounded-full border border-violet-200 text-violet-500 bg-violet-50"
-                >
-                  {f.avatar} {f.name} · {count}
-                </span>
-              );
-            })}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

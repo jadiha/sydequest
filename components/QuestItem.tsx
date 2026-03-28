@@ -9,48 +9,43 @@ interface Props {
   onDelete: () => void;
 }
 
-// Each item gets ONE of these variants based on index
 type Variant = "plain" | "highlight" | "underline" | "tilted";
+const VARIANTS: Variant[] = ["highlight", "plain", "underline", "plain", "tilted", "plain"];
 
-const VARIANTS: Variant[] = ["plain", "highlight", "underline", "tilted", "plain", "highlight"];
-
-// Font per item — alternates between handwriting fonts
-const ITEM_FONTS = [
-  "'Kalam', cursive",
-  "'Caveat', cursive",
-  "'Patrick Hand', cursive",
-  "'Kalam', cursive",
-  "'Caveat', cursive",
-  "'Patrick Hand', cursive",
+// Playfair Display italic is the star — editorial, magazine-quality
+// Mix with Special Elite for a couple items to feel cut-from-different-sources
+const ITEM_STYLES = [
+  { font: "'Playfair Display', serif", size: "22px", weight: 700, italic: true  },
+  { font: "'Special Elite', cursive",  size: "18px", weight: 400, italic: false },
+  { font: "'Playfair Display', serif", size: "24px", weight: 400, italic: true  },
+  { font: "'Libre Baskerville', serif",size: "19px", weight: 700, italic: false },
+  { font: "'Playfair Display', serif", size: "21px", weight: 700, italic: true  },
+  { font: "'Courier Prime', monospace",size: "17px", weight: 400, italic: false },
+  { font: "'Playfair Display', serif", size: "23px", weight: 400, italic: true  },
+  { font: "'Special Elite', cursive",  size: "19px", weight: 400, italic: false },
 ];
 
-// Color per item (text colors)
+// Deep, printed ink colors — not pastel
 const ITEM_COLORS = [
-  "#5a2d6e", // deep violet
-  "#8b1a3a", // dark rose
-  "#1a4060", // navy
-  "#3a6030", // forest green
-  "#7a3800", // burnt amber
-  "#1a4050", // teal
-  "#6e2d5a", // plum
-  "#4a3000", // brown
+  "#5a1d6e",
+  "#7a1a2a",
+  "#1a3a60",
+  "#3a5020",
+  "#6a3000",
+  "#1a4040",
+  "#5a2040",
+  "#3a2800",
 ];
 
-const ITEM_SIZES = ["22px", "19px", "25px", "20px", "23px", "18px", "24px", "21px"];
-
-// Sticker per item
 const STICKERS = ["🎬", "🌻", "🚲", "👵", "🌅", "🏺", "🎨", "🎭", "🌙", "🎪"];
 
 export default function QuestItem({ quest, index, onToggleComplete, onDelete }: Props) {
-  const variant   = VARIANTS[index % VARIANTS.length];
-  const font      = ITEM_FONTS[index % ITEM_FONTS.length];
-  const color     = ITEM_COLORS[index % ITEM_COLORS.length];
-  const size      = ITEM_SIZES[index % ITEM_SIZES.length];
-  const sticker   = STICKERS[index % STICKERS.length];
-  const tiltDeg   = variant === "tilted" ? (index % 2 === 0 ? -0.8 : 0.8) : 0;
-  const fontWeight = index % 3 === 0 ? 700 : 400;
+  const variant = VARIANTS[index % VARIANTS.length];
+  const style   = ITEM_STYLES[index % ITEM_STYLES.length];
+  const color   = ITEM_COLORS[index % ITEM_COLORS.length];
+  const sticker = STICKERS[index % STICKERS.length];
+  const tiltDeg = variant === "tilted" ? (index % 2 === 0 ? -0.7 : 0.7) : 0;
 
-  // Format completion date
   const completedDate = quest.completedAt
     ? new Date(quest.completedAt).toLocaleDateString("en-US", { month: "short", day: "numeric" })
     : null;
@@ -61,36 +56,36 @@ export default function QuestItem({ quest, index, onToggleComplete, onDelete }: 
         layout
         initial={{ opacity: 0, x: -8 }}
         animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+        exit={{ opacity: 0, height: 0 }}
         transition={{ duration: 0.2 }}
-        className="flex items-start gap-2 py-1 group relative"
+        className="flex items-start gap-2.5 py-1.5 group relative"
         style={{ transform: `rotate(${tiltDeg}deg)` }}
       >
         {/* number */}
         <span
-          style={{ fontFamily: "'Caveat', cursive" }}
-          className="text-gray-300 text-[15px] min-w-[20px] pt-1.5 flex-shrink-0 select-none font-bold"
+          style={{ fontFamily: "'Special Elite', cursive" }}
+          className="text-gray-300 text-[14px] min-w-[20px] pt-1.5 flex-shrink-0 select-none"
         >
           {index + 1}.
         </span>
 
-        {/* main text area */}
+        {/* text block */}
         <div className="flex-1 relative">
           <button
             onClick={onToggleComplete}
             className="text-left w-full cursor-pointer leading-snug"
             style={{
-              fontFamily: font,
-              fontSize: size,
-              fontWeight,
+              fontFamily: style.font,
+              fontSize: style.size,
+              fontWeight: style.weight,
+              fontStyle: style.italic ? "italic" : "normal",
               color: quest.completed ? "#bbb" : color,
               textDecoration: quest.completed ? "line-through" : "none",
-              textDecorationColor: "rgba(180,0,60,0.4)",
-              textDecorationThickness: "2.5px",
-              transition: "all 0.25s ease",
+              textDecorationColor: "rgba(160,40,60,0.4)",
+              textDecorationThickness: "2px",
+              transition: "color 0.2s, opacity 0.2s",
             }}
           >
-            {/* highlight variant wraps key word */}
             {variant === "highlight" && !quest.completed ? (
               <span className="quest-highlight">
                 <mark>{quest.title.split(" ")[0]}</mark>
@@ -101,43 +96,37 @@ export default function QuestItem({ quest, index, onToggleComplete, onDelete }: 
             )}
           </button>
 
-          {/* underline variant: wavy line below */}
+          {/* underline variant */}
           {variant === "underline" && !quest.completed && (
             <div
-              className="absolute bottom-0 left-0 right-4 h-[2px] rounded-full"
-              style={{ background: color, opacity: 0.3 }}
+              className="absolute bottom-0 left-0 right-6 h-[1.5px] rounded-full"
+              style={{ background: color, opacity: 0.25 }}
             />
           )}
 
-          {/* completion memory: date + heart */}
+          {/* completion date memory */}
           {quest.completed && completedDate && (
             <motion.p
-              initial={{ opacity: 0, y: 4 }}
+              initial={{ opacity: 0, y: 3 }}
               animate={{ opacity: 1, y: 0 }}
-              style={{ fontFamily: "'Caveat', cursive" }}
-              className="text-[12px] text-pink-400 mt-0.5"
+              style={{ fontFamily: "'Special Elite', cursive" }}
+              className="text-[11px] text-rose-400 mt-0.5"
             >
               ♡ done {completedDate}
             </motion.p>
           )}
 
-          {/* pink overlay on completion */}
-          {quest.completed && (
-            <div className="completion-overlay" />
-          )}
+          {quest.completed && <div className="completion-overlay" />}
         </div>
 
-        {/* sticker + delete */}
-        <div className="flex items-center gap-1 pt-1 flex-shrink-0">
-          <span
-            className="text-[18px] float"
-            style={{ animationDelay: `${index * 0.22}s` }}
-          >
+        {/* emoji + delete */}
+        <div className="flex items-center gap-1.5 pt-1 flex-shrink-0">
+          <span className="text-[17px] float" style={{ animationDelay: `${index * 0.2}s` }}>
             {quest.emoji || sticker}
           </span>
           <button
             onClick={onDelete}
-            className="opacity-0 group-hover:opacity-30 hover:!opacity-70 text-gray-400 text-xs transition-opacity"
+            className="opacity-0 group-hover:opacity-25 hover:!opacity-60 text-gray-500 text-xs transition-opacity"
             aria-label="delete"
           >
             ✕
