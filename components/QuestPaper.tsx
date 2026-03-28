@@ -29,10 +29,10 @@ export default function QuestPaper({ quests, friends, userName, termLabel, onTog
 
   return (
     <div
-      className="paper paper-lined washi-tape w-full max-w-md rounded-sm px-6 pt-10 pb-10 relative overflow-visible"
+      className="paper paper-lined washi-tape w-full rounded-sm px-6 pt-10 pb-8 relative overflow-visible"
       style={{
-        transform: "rotate(-0.8deg)",
-        boxShadow: "0 4px 6px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.13)",
+        transform: "rotate(-0.5deg)",
+        boxShadow: "0 2px 4px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.10)",
       }}
     >
       {/* background stickers */}
