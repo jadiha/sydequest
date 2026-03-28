@@ -6,24 +6,20 @@ import ScrapbookTitle from "./ScrapbookTitle";
 interface Props {
   quests: Quest[];
   friends: Friend[];
-  userName: string;
   termLabel: string;
   onToggleComplete: (id: string) => void;
   onDelete: (id: string) => void;
 }
 
-// Scattered background stickers
+// Stickers inside the paper
 const BG_STICKERS = [
-  { e: "⭐", top: "14px",   right: "14px",  delay: 0,   size: "22px" },
-  { e: "💜", top: "85px",   right: "6px",   delay: 0.4, size: "17px" },
-  { e: "✨", top: "180px",  right: "10px",  delay: 0.8, size: "19px" },
-  { e: "🌸", bottom: "100px", left: "8px", delay: 1.2, size: "16px" },
-  { e: "⭐", bottom: "50px",  right: "12px", delay: 1.6, size: "20px" },
-  { e: "💫", top: "260px",  right: "7px",   delay: 2.0, size: "15px" },
-  { e: "🎀", top: "340px",  right: "9px",   delay: 0.6, size: "16px" },
+  { e: "💜", top: "80px",    right: "8px",  delay: 0.4, size: "16px" },
+  { e: "✨", top: "180px",   right: "10px", delay: 0.8, size: "17px" },
+  { e: "🌸", bottom: "80px", left: "10px",  delay: 1.2, size: "15px" },
+  { e: "💫", top: "260px",   right: "8px",  delay: 2.0, size: "14px" },
 ];
 
-export default function QuestPaper({ quests, friends, userName, termLabel, onToggleComplete, onDelete }: Props) {
+export default function QuestPaper({ quests, termLabel, onToggleComplete, onDelete }: Props) {
   const done  = quests.filter(q => q.completed).length;
   const total = quests.length;
 
@@ -35,36 +31,26 @@ export default function QuestPaper({ quests, friends, userName, termLabel, onTog
         boxShadow: "0 2px 4px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.10)",
       }}
     >
-      {/* background stickers */}
+      {/* paper stickers */}
       {BG_STICKERS.map(({ e, delay, size, ...pos }, i) => (
         <span
           key={i}
           className="absolute pointer-events-none float select-none"
-          style={{ ...pos, fontSize: size, animationDelay: `${delay}s`, opacity: 0.65 } as React.CSSProperties}
+          style={{ ...pos, fontSize: size, animationDelay: `${delay}s`, opacity: 0.6 } as React.CSSProperties}
         >
           {e}
         </span>
       ))}
 
       {/* header */}
-      <div className="text-center mb-6 relative z-10">
-        {/* subtitle: username in small caveat */}
-        <p style={{ fontFamily: "'Caveat', cursive" }} className="text-[14px] text-violet-400 tracking-[3px] mb-2">
-          ✦ {userName}&apos;s ✦
-        </p>
-
-        {/* THE RANSOM NOTE TITLE */}
-        <ScrapbookTitle text="Quest List" className="mb-2" />
-
-        {/* term in handwriting */}
+      <div className="text-center mb-5 relative z-10">
+        <ScrapbookTitle text="Quest List" size="sm" className="mb-2" />
         <p
           style={{ fontFamily: "'Caveat', cursive", fontWeight: 700 }}
-          className="text-[20px] text-pink-500 mt-2"
+          className="text-[18px] text-pink-400 mt-1"
         >
           {termLabel} ☀️
         </p>
-
-        {/* deco line */}
         <div className="mt-2 mx-auto w-4/5 border-t-2 border-dashed border-pink-200" />
       </div>
 
@@ -84,14 +70,14 @@ export default function QuestPaper({ quests, friends, userName, termLabel, onTog
             style={{ fontFamily: "'Caveat', cursive" }}
             className="text-center text-gray-300 py-10 text-xl"
           >
-            no quests yet... add one! ✦
+            no quests yet ✦
           </li>
         )}
       </ul>
 
-      {/* progress footer */}
-      <div className="relative z-10 mt-5 pl-8">
-        <p style={{ fontFamily: "'Special Elite', cursive" }} className="text-[13px] text-gray-300">
+      {/* progress */}
+      <div className="relative z-10 mt-4 pl-8">
+        <p style={{ fontFamily: "'Special Elite', cursive" }} className="text-[12px] text-gray-300">
           {done === 0
             ? `0 / ${total} ✦ let's gooo!!`
             : done === total && total > 0
@@ -99,7 +85,6 @@ export default function QuestPaper({ quests, friends, userName, termLabel, onTog
               : `${done} / ${total} completed ✦ keep going!!`}
         </p>
       </div>
-
     </div>
   );
 }
