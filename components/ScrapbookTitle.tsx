@@ -1,37 +1,68 @@
 "use client";
 
-// These fonts genuinely look like they were cut from different printed sources
-const FONTS = [
-  "'Rye', serif",                     // wood-type Western poster — looks ripped from a broadside
-  "'Kranky', cursive",                // wobbly hand-drawn — looks like a hand-lettered ad
-  "'Abril Fatface', serif",           // heavy ink-trap — 1970s magazine headline
-  "'Special Elite', cursive",         // typewriter ink bleed — newspaper clipping
-  "'Oswald', sans-serif",             // condensed tabloid headline
-  "'Anton', sans-serif",              // thick poster type
-  "'Libre Baskerville', serif",       // editorial book serif
-  "'UnifrakturMaguntia', cursive",    // gothic blackletter — old broadsheet
+// ── Design system tokens ──────────────────────────────────────────────────────
+// Each token set is the source of truth for the ransom-note cut-out aesthetic.
+// To retheme: change values here, nothing else needs to touch.
+
+// Fonts: each feels cut from a different printed source
+export const CUT_FONTS = [
+  "'Rye', serif",                   // wood-type Western broadside
+  "'Kranky', cursive",              // wobbly hand-lettered ad
+  "'Abril Fatface', serif",         // heavy 1970s magazine headline
+  "'Special Elite', cursive",       // typewriter ink-bleed clipping
+  "'Oswald', sans-serif",           // condensed tabloid headline
+  "'Anton', sans-serif",            // thick poster type
+  "'Libre Baskerville', serif",     // editorial book serif
+  "'UnifrakturMaguntia', cursive",  // gothic broadsheet
 ];
 
-// Warm muted paper chip backgrounds — like real physical pages
-const CHIP_BG = [
-  "#f5e642", "#e8c4c4", "#c4dce8", "#c8e8c4",
-  "#f0d0b0", "#e8d4f0", "#f0c8a8", "#c4c8e8",
-  "#f5f0d0", "#e8b4b8", "#d8e8c0", "#f0e0c0",
+// Chip backgrounds: vivid, saturated — like the reference image
+export const CUT_CHIP_BG = [
+  "#f72585", // hot pink
+  "#f9c74f", // vivid yellow
+  "#43aa8b", // teal green
+  "#f4442e", // tomato red
+  "#4361ee", // bright blue
+  "#ff6b35", // orange
+  "#7209b7", // deep purple
+  "#06d6a0", // mint
+  "#ffd166", // golden yellow
+  "#ef476f", // coral pink
+  "#118ab2", // ocean blue
+  "#8ecae6", // sky
+  "#a8dadc", // seafoam
+  "#e9c46a", // sand yellow
+  "#2dc653", // grass green
+  "#ff99c8", // bubblegum
 ];
 
-// Deep printed ink colors
-const LETTER_COLORS = [
-  "#1a1a1a", "#8b1a1a", "#1a2f5e", "#2c4a1e",
-  "#5c2d00", "#1a1a5e", "#4a0a2a", "#2a2a2a",
+// Letter colors: pair with chip — light on dark, dark on light
+// Index-matched to CHIP_BG so contrast is always intentional
+export const CUT_LETTER_COLORS = [
+  "#ffffff",  // white on hot pink
+  "#1a1a1a",  // black on yellow
+  "#ffffff",  // white on teal
+  "#ffffff",  // white on red
+  "#ffffff",  // white on blue
+  "#1a1a1a",  // black on orange
+  "#ffd166",  // yellow on purple
+  "#1a1a1a",  // black on mint
+  "#1a1a1a",  // black on golden yellow
+  "#ffffff",  // white on coral
+  "#ffffff",  // white on ocean blue
+  "#1a1a2e",  // navy on sky
+  "#1a1a1a",  // black on seafoam
+  "#5c2d00",  // brown on sand
+  "#ffffff",  // white on green
+  "#7209b7",  // purple on bubblegum
 ];
 
-// Bigger sizes for large display use
-const SIZES_LG = [38, 44, 32, 48, 36, 42, 30, 46, 38, 36];
-// Smaller for in-paper use
-const SIZES_SM = [24, 28, 20, 30, 22, 26, 18, 28, 24, 22];
+export const CUT_SIZES_LG = [38, 44, 32, 48, 36, 42, 30, 46, 38, 36];
+export const CUT_SIZES_SM = [24, 28, 20, 30, 22, 26, 18, 28, 24, 22];
+export const CUT_RADII    = ["2px", "3px", "1px", "4px", "2px", "0px", "3px", "2px"];
+export const CUT_WEIGHTS  = [700, 400, 700, 400, 700, 700, 400, 700];
 
-const RADII   = ["2px", "3px", "1px", "4px", "2px", "0px", "3px", "2px"];
-const WEIGHTS = [700, 400, 700, 400, 700, 700, 400, 700];
+// ── Component ─────────────────────────────────────────────────────────────────
 
 interface Props {
   text: string;
@@ -40,7 +71,7 @@ interface Props {
 }
 
 export default function ScrapbookTitle({ text, className = "", size = "lg" }: Props) {
-  const SIZES = size === "lg" ? SIZES_LG : SIZES_SM;
+  const SIZES = size === "lg" ? CUT_SIZES_LG : CUT_SIZES_SM;
 
   return (
     <div
@@ -50,14 +81,16 @@ export default function ScrapbookTitle({ text, className = "", size = "lg" }: Pr
       {text.split("").map((char, i) => {
         if (char === " ") return <span key={i} className="w-3" aria-hidden="true" />;
 
-        const font     = FONTS[i % FONTS.length];
-        const chipBg   = CHIP_BG[i % CHIP_BG.length];
-        const color    = LETTER_COLORS[i % LETTER_COLORS.length];
-        const baseSize = SIZES[i % SIZES.length];
-        const radius   = RADII[i % RADII.length];
-        const weight   = WEIGHTS[i % WEIGHTS.length];
-        const rotation = Math.sin(i * 1.7) * 5;
+        const font      = CUT_FONTS[i % CUT_FONTS.length];
+        const chipBg    = CUT_CHIP_BG[i % CUT_CHIP_BG.length];
+        const color     = CUT_LETTER_COLORS[i % CUT_LETTER_COLORS.length];
+        const baseSize  = SIZES[i % SIZES.length];
+        const radius    = CUT_RADII[i % CUT_RADII.length];
+        const weight    = CUT_WEIGHTS[i % CUT_WEIGHTS.length];
+        const rotation  = Math.sin(i * 1.7) * 5;
         const finalSize = baseSize + (i % 3 === 0 ? 4 : 0);
+        // Vary chip padding to feel hand-cut (not uniform)
+        const pad = ["4px 8px", "3px 5px", "5px 6px", "3px 7px", "4px 5px"][i % 5];
 
         return (
           <span
@@ -72,9 +105,7 @@ export default function ScrapbookTitle({ text, className = "", size = "lg" }: Pr
               fontWeight: weight,
               transform: `rotate(${rotation}deg)`,
               borderRadius: radius,
-              padding: i % 5 === 0 ? "4px 7px" : i % 5 === 1 ? "3px 5px" : "3px 5px",
-              outline: i % 4 === 0 ? "1.5px solid rgba(0,0,0,0.10)" : "none",
-              outlineOffset: "1px",
+              padding: pad,
             }}
           >
             {char}
