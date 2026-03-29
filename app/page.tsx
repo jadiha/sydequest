@@ -1,25 +1,24 @@
 "use client";
 import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import SplashScreen   from "@/components/SplashScreen";
-import BulletinBoard  from "@/components/BulletinBoard";
-import Toast          from "@/components/Toast";
+import SplashScreen  from "@/components/SplashScreen";
+import BulletinBoard from "@/components/BulletinBoard";
+import Toast         from "@/components/Toast";
 import type { Quest } from "@/lib/types";
 import { SEED_QUESTS, SEED_FRIENDS } from "@/lib/store";
 
 const COMPLETE_TOASTS: Record<string, string> = {
-  q1: "PJ GANG ACTIVATED!!",
-  q2: "market girlies!!",
+  q1: "GRANNY GANG RISE UP",
+  q2: "grad house gang!!",
   q3: "Tour de Waterloo!!",
-  q4: "GRANNY GANG RISE UP",
-  q5: "grad house gang!!",
+  q4: "PJ GANG ACTIVATED!!",
 };
 
 export default function Home() {
-  const [phase,   setPhase]  = useState<"splash" | "board">("splash");
-  const [quests,  setQuests] = useState<Quest[]>(SEED_QUESTS);
-  const [friends]            = useState(SEED_FRIENDS);
-  const [toast,   setToast]  = useState<string | null>(null);
+  const [phase,  setPhase]  = useState<"splash" | "board">("splash");
+  const [quests, setQuests] = useState<Quest[]>(SEED_QUESTS);
+  const [friends]           = useState(SEED_FRIENDS);
+  const [toast,  setToast]  = useState<string | null>(null);
 
   function showToast(msg: string) {
     setToast(msg);
@@ -46,7 +45,6 @@ export default function Home() {
           <motion.div
             key="splash"
             exit={{
-              // crumple: hold → slight bulge → rapid scrunch and throw upward
               scale:   [1, 1.04, 0.04],
               rotate:  [0, -2,   22],
               y:       [0, 0,    -320],
