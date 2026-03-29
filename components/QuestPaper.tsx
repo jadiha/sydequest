@@ -11,37 +11,15 @@ interface Props {
   onDelete: (id: string) => void;
 }
 
-// Stickers inside the paper
-const BG_STICKERS = [
-  { e: "💜", top: "80px",    right: "8px",  delay: 0.4, size: "16px" },
-  { e: "✨", top: "180px",   right: "10px", delay: 0.8, size: "17px" },
-  { e: "🌸", bottom: "80px", left: "10px",  delay: 1.2, size: "15px" },
-  { e: "💫", top: "260px",   right: "8px",  delay: 2.0, size: "14px" },
-];
-
 export default function QuestPaper({ quests, termLabel, onToggleComplete, onDelete }: Props) {
   const done  = quests.filter(q => q.completed).length;
   const total = quests.length;
 
   return (
     <div
-      className="paper paper-lined washi-tape w-full rounded-sm px-6 pt-10 pb-8 relative overflow-visible"
-      style={{
-        transform: "rotate(-0.5deg)",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.10)",
-      }}
+      className="w-full px-6 pt-10 pb-8 relative overflow-visible"
+      style={{ transform: "rotate(-0.5deg)" }}
     >
-      {/* paper stickers */}
-      {BG_STICKERS.map(({ e, delay, size, ...pos }, i) => (
-        <span
-          key={i}
-          className="absolute pointer-events-none float select-none"
-          style={{ ...pos, fontSize: size, animationDelay: `${delay}s`, opacity: 0.6 } as React.CSSProperties}
-        >
-          {e}
-        </span>
-      ))}
-
       {/* header */}
       <div className="text-center mb-5 relative z-10">
         <ScrapbookTitle text="Quest List" size="sm" className="mb-2" />
@@ -49,7 +27,7 @@ export default function QuestPaper({ quests, termLabel, onToggleComplete, onDele
           style={{ fontFamily: "'Caveat', cursive", fontWeight: 700 }}
           className="text-[18px] text-pink-400 mt-1"
         >
-          {termLabel} ☀️
+          {termLabel}
         </p>
         <div className="mt-2 mx-auto w-4/5 border-t-2 border-dashed border-pink-200" />
       </div>
@@ -79,10 +57,10 @@ export default function QuestPaper({ quests, termLabel, onToggleComplete, onDele
       <div className="relative z-10 mt-4 pl-8">
         <p style={{ fontFamily: "'Special Elite', cursive" }} className="text-[12px] text-gray-300">
           {done === 0
-            ? `0 / ${total} ✦ let's gooo!!`
+            ? `0 / ${total} — let's go!!`
             : done === total && total > 0
-              ? `${total} / ${total} ✦ SYDE QUEST COMPLETE 🎉`
-              : `${done} / ${total} completed ✦ keep going!!`}
+              ? `${total} / ${total} — SYDE QUEST COMPLETE`
+              : `${done} / ${total} completed`}
         </p>
       </div>
     </div>
