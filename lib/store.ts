@@ -67,6 +67,17 @@ export const SEED_QUESTS: Quest[] = [
     interestedFriendIds: ["f1", "f3"],
     createdAt: new Date().toISOString(),
   },
+  {
+    id: "q5",
+    title: "Host a Tonka Jahari pizza party",
+    emoji: "🍕",
+    completed: false,
+    category: "wild",
+    difficulty: "easy",
+    addedBy: "jadiha",
+    interestedFriendIds: ["f1", "f2", "f3"],
+    createdAt: new Date().toISOString(),
+  },
 ];
 
 export const SEED_FRIENDS: Friend[] = [
