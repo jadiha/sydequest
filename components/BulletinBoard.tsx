@@ -144,29 +144,30 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
           {/* 3A Summerloo — sits on first ruled line (~9% from top) */}
           <div style={{ paddingTop: "6.2%", textAlign: "center", flexShrink: 0 }}>
             <p style={{
-              fontFamily: "'Shadows Into Light', cursive",
-              fontWeight: 700,
+              fontFamily: "'Special Elite', cursive",
               fontSize: "clamp(14px, 1.8vw, 28px)",
               color: "#3a1a1a",
               margin: 0,
-              letterSpacing: "0.05em",
+              letterSpacing: "0.08em",
               lineHeight: 1,
             }}>
               3A Summerloo
             </p>
           </div>
 
-          {/* Quest list — each item sits on a ruled line */}
+          {/* Quest list — spread evenly across the paper */}
           <ul style={{
             listStyle: "none",
             margin: 0,
             padding: 0,
             paddingLeft: "20%",
-            paddingRight: "4%",
-            paddingTop: "3.2%",
+            paddingRight: "6%",
+            paddingTop: "2%",
+            paddingBottom: "4%",
             flex: 1,
             display: "flex",
             flexDirection: "column",
+            justifyContent: "space-evenly",
           }}>
             {quests.map((quest) => (
               <li
@@ -174,9 +175,8 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
                 style={{
                   display: "flex",
                   alignItems: "flex-end",
-                  /* each li is exactly one line-height tall so text baseline sits on the rule */
                   height: "clamp(28px, 3vw, 46px)",
-                  paddingBottom: "0.15vw",
+                  paddingBottom: "0.3vw",
                 }}
               >
                 <button
@@ -186,14 +186,14 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
                 >
                   <Checkbox checked={quest.completed} />
                   <span style={{
-                    fontFamily: "'Shadows Into Light', cursive",
-                    fontWeight: 700,
-                    fontSize: "clamp(15px, 2vw, 32px)",
+                    fontFamily: "'Special Elite', cursive",
+                    fontSize: "clamp(15px, 2.1vw, 32px)",
                     color: "#1a1a1a",
                     textDecoration: quest.completed ? "line-through" : "none",
                     opacity: quest.completed ? 0.45 : 1,
                     whiteSpace: "nowrap",
                     lineHeight: 1,
+                    letterSpacing: "0.03em",
                   }}>
                     {quest.title}
                   </span>
