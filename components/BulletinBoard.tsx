@@ -16,13 +16,14 @@ function StarBullet() {
       style={{
         display: "inline-block",
         flexShrink: 0,
-        width: 18,
-        height: 18,
+        width: "clamp(14px, 4.2vw, 52px)" as string,
+        height: "clamp(14px, 4.2vw, 52px)" as string,
         backgroundColor: "#6b1220",
         clipPath:
           "polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)",
-        marginRight: 8,
-        marginTop: 2,
+        marginRight: "clamp(6px, 1.5vw, 20px)" as string,
+        marginTop: "0.3em",
+        flexShrink: 0,
       }}
       aria-hidden="true"
     />
@@ -119,69 +120,70 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
           />
         </div>
 
-        {/* Lined paper: centered, width=63.4% desktop / 88% mobile */}
+        {/* Lined paper — width matches Figma ratio, min-height maintains image aspect ratio */}
         <div
           className="relative z-10"
           style={{
-            width: "min(63.4%, 88vw)",
+            width: "min(63.4vw, 88vw)",
+            minHeight: "calc(min(63.4vw, 88vw) * 1.415)",
+            backgroundImage: "url('/figma/paper-lined.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "top left",
+            boxShadow: "0 4px 24px rgba(0,0,0,0.28)",
+            /* padding-left: 22% clears the star decorations baked into the paper image (they sit at ~9% from left).
+               Figma text starts at 18.8% of paper width. padding % is relative to element width. */
+            paddingTop: "2.5%",
+            paddingLeft: "22%",
+            paddingRight: "5%",
+            paddingBottom: "5%",
           }}
         >
-          <div
+          {/* Header */}
+          <p
             style={{
-              backgroundImage: "url('/figma/paper-lined.png')",
-              backgroundSize: "cover",
-              backgroundPosition: "top",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.28)",
-              padding: "clamp(16px, 3vw, 40px) clamp(20px, 4vw, 60px)",
+              fontFamily: "'Irish Grover', cursive",
+              fontSize: "clamp(14px, 2vw, 30px)",
+              color: "#000",
+              marginBottom: "clamp(10px, 3vw, 40px)",
+              marginTop: 0,
             }}
           >
-            {/* Header */}
-            <p
-              style={{
-                fontFamily: "'Irish Grover', cursive",
-                fontSize: "clamp(12px, 1.2vw, 16px)",
-                color: "#000",
-                marginBottom: "clamp(8px, 1.5vw, 20px)",
-                marginTop: 0,
-              }}
-            >
-              3A Summerloo
-            </p>
+            3A Summerloo
+          </p>
 
-            {/* Quest items */}
-            <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-              {quests.map((quest) => (
-                <li
-                  key={quest.id}
+          {/* Quest items — 2.6vw matches Figma's 40px @ 1512px */}
+          <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            {quests.map((quest) => (
+              <li
+                key={quest.id}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  marginBottom: "clamp(14px, 5vw, 75px)",
+                }}
+              >
+                <StarBullet />
+                <button
+                  onClick={() => onToggleComplete(quest.id)}
                   style={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    marginBottom: "clamp(10px, 1.8vw, 26px)",
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    cursor: "pointer",
+                    fontFamily: "'Irish Grover', cursive",
+                    fontSize: "clamp(16px, 2.6vw, 40px)",
+                    color: "#000",
+                    textAlign: "left",
+                    textDecoration: quest.completed ? "line-through" : "none",
+                    opacity: quest.completed ? 0.5 : 1,
+                    lineHeight: 1.3,
                   }}
                 >
-                  <StarBullet />
-                  <button
-                    onClick={() => onToggleComplete(quest.id)}
-                    style={{
-                      background: "none",
-                      border: "none",
-                      padding: 0,
-                      cursor: "pointer",
-                      fontFamily: "'Irish Grover', cursive",
-                      fontSize: "clamp(14px, 1.4vw, 20px)",
-                      color: "#000",
-                      textAlign: "left",
-                      textDecoration: quest.completed ? "line-through" : "none",
-                      opacity: quest.completed ? 0.5 : 1,
-                      lineHeight: 1.3,
-                    }}
-                  >
-                    {quest.title}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+                  {quest.title}
+                </button>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Ticket stub: left=3.6%, bottom ~5%, width=16.3%, rotate(-15deg) */}
