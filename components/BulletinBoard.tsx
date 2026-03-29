@@ -144,7 +144,7 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
           {/* 3A Summerloo — sits on first ruled line (~9% from top) */}
           <div style={{ paddingTop: "6.2%", textAlign: "center", flexShrink: 0 }}>
             <p style={{
-              fontFamily: "'Special Elite', cursive",
+              fontFamily: "var(--font-special-elite), 'Special Elite', monospace",
               fontSize: "clamp(14px, 1.8vw, 28px)",
               color: "#3a1a1a",
               margin: 0,
@@ -186,7 +186,7 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
                 >
                   <Checkbox checked={quest.completed} />
                   <span style={{
-                    fontFamily: "'Special Elite', cursive",
+                    fontFamily: "var(--font-special-elite), 'Special Elite', monospace",
                     fontSize: "clamp(15px, 2.1vw, 32px)",
                     color: "#1a1a1a",
                     textDecoration: quest.completed ? "line-through" : "none",

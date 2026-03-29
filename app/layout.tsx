@@ -1,5 +1,13 @@
 import type { Metadata, Viewport } from "next";
+import { Special_Elite } from "next/font/google";
 import "./globals.css";
+
+const specialElite = Special_Elite({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-special-elite",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "SydeQuest ✦",
@@ -15,7 +23,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className={`antialiased ${specialElite.variable}`}>{children}</body>
     </html>
   );
 }
