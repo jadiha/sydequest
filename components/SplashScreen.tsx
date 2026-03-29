@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { playCrumple } from "@/lib/sounds";
 
 interface Props { onPlay: () => void; }
 
@@ -96,7 +97,7 @@ export default function SplashScreen({ onPlay }: Props) {
       {/* PLAY button */}
       <div className="absolute left-0 right-0 flex justify-center" style={{ top: "82.6%" }}>
         <motion.button
-          onClick={onPlay}
+          onClick={() => { playCrumple(); onPlay(); }}
           aria-label="Play"
           style={{ width: "max(19.4vw, 160px)", background: "none", border: "none", cursor: "pointer", padding: 0 }}
           initial={{ opacity: 0, y: 20 }}
