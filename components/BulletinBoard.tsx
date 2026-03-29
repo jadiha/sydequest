@@ -122,7 +122,7 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
           {/* 3A Summerloo — centered */}
           <div style={{ paddingTop: "2.8%", textAlign: "center", flexShrink: 0 }}>
             <p style={{
-              fontFamily: "'Caveat', cursive",
+              fontFamily: "'Shadows Into Light', cursive",
               fontWeight: 700,
               fontSize: "clamp(14px, 1.8vw, 28px)",
               color: "#3a1a1a",
@@ -155,7 +155,7 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
                 >
                   <Checkbox checked={quest.completed} />
                   <span style={{
-                    fontFamily: "'Caveat', cursive",
+                    fontFamily: "'Shadows Into Light', cursive",
                     fontWeight: 700,
                     fontSize: "clamp(15px, 2vw, 32px)",
                     color: "#1a1a1a",
