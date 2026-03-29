@@ -9,40 +9,30 @@ interface Props {
   onDelete: (id: string) => void;
 }
 
-// Checkbox matching Figma — square, dark border, checkmark when done
 function Checkbox({ checked }: { checked: boolean }) {
   return (
-    <div
-      style={{
-        width: "clamp(16px, 1.8vw, 26px)",
-        height: "clamp(16px, 1.8vw, 26px)",
-        border: "2px solid #3a1a1a",
-        borderRadius: "2px",
-        flexShrink: 0,
-        marginRight: "clamp(8px, 1vw, 14px)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        backgroundColor: checked ? "#3a1a1a" : "transparent",
-      }}
-    >
+    <div style={{
+      width: "clamp(14px, 1.6vw, 24px)",
+      height: "clamp(14px, 1.6vw, 24px)",
+      border: "2px solid #3a1a1a",
+      borderRadius: "2px",
+      flexShrink: 0,
+      marginRight: "clamp(8px, 0.8vw, 14px)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: checked ? "#3a1a1a" : "transparent",
+    }}>
       {checked && (
         <svg viewBox="0 0 12 10" width="65%" height="65%">
-          <polyline
-            points="1,5 4.5,9 11,1"
-            fill="none"
-            stroke="#fffcf0"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
+          <polyline points="1,5 4.5,9 11,1" fill="none" stroke="#fffcf0"
+            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       )}
     </div>
   );
 }
 
-// Board letters — reduced sizes so T doesn't clip
 const LETTERS_LEFT = [
   { src: "/figma/letter-S1.png", hvw: 9.5 },
   { src: "/figma/letter-Y.png",  hvw: 6.8 },
@@ -59,95 +49,105 @@ const LETTERS_RIGHT = [
 
 export default function BulletinBoard({ quests, friends, onToggleComplete, onDelete }: Props) {
   return (
-    <div
-      className="relative overflow-y-auto"
-      style={{
-        width: "100vw",
-        minHeight: "100vh",
-        backgroundImage: "url('/figma/bg-cork.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* ── Letters across the top ── */}
-      <div
-        className="w-full flex items-end"
-        style={{ paddingTop: "1vw", paddingLeft: "0.3vw", paddingRight: "0.3vw" }}
-      >
+    <div style={{
+      width: "100vw",
+      height: "100vh",
+      overflow: "hidden",
+      backgroundImage: "url('/figma/bg-cork.png')",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      display: "flex",
+      flexDirection: "column",
+    }}>
+      {/* ── Letters ── */}
+      <div className="w-full flex items-end flex-shrink-0"
+        style={{ paddingTop: "1vw", paddingLeft: "0.3vw", paddingRight: "0.3vw" }}>
         <div className="flex items-end" style={{ gap: "0.15vw" }}>
           {LETTERS_LEFT.map((l, i) => (
-            <Image key={i} src={l.src} alt="" width={200} height={200}
-              style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }}
-              priority />
+            <Image key={i} src={l.src} alt="" width={200} height={200} priority
+              style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }} />
           ))}
         </div>
         <div style={{ flex: 1 }} />
         <div className="flex items-end" style={{ gap: "0.15vw" }}>
           {LETTERS_RIGHT.map((l, i) => (
-            <Image key={i} src={l.src} alt="" width={200} height={200}
-              style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }}
-              priority />
+            <Image key={i} src={l.src} alt="" width={200} height={200} priority
+              style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }} />
           ))}
         </div>
       </div>
 
-      {/* ── Main board area ── */}
-      <div className="relative w-full flex justify-center" style={{ paddingTop: "2vw", paddingBottom: "10vw" }}>
+      {/* ── Board area: fills remaining height ── */}
+      <div className="relative flex-1 flex items-center justify-center"
+        style={{ padding: "1.5vw 0 3vw" }}>
 
-        {/* Flowers — left of board */}
-        <div className="absolute" style={{ left: "0%", top: "0%", width: "13.6%" }}>
+        {/* Flowers */}
+        <div className="absolute" style={{ left: "0%", top: "0%", width: "13%" }}>
           <Image src="/figma/sticker-e.png" alt="" width={206} height={500}
             style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
 
-        {/* Spiderman — right of board */}
-        <div className="absolute" style={{ right: "0%", top: "0%", width: "21%" }}>
+        {/* Spiderman */}
+        <div className="absolute" style={{ right: "0%", top: "5%", width: "19%" }}>
           <Image src="/figma/sticker-c.png" alt="" width={352} height={400}
             style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
 
-        {/* ── Lined paper ── */}
-        <div
-          className="relative z-10"
-          style={{
-            width: "min(63.4vw, 88vw)",
-            minHeight: "calc(min(63.4vw, 88vw) * 1.415)",
-            backgroundImage: "url('/figma/paper-lined.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "top left",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.28)",
-            paddingBottom: "5%",
-          }}
-        >
-          {/* "3A Summerloo" — centered across full paper width */}
-          <div style={{ paddingTop: "2.8%", textAlign: "center" }}>
+        {/* Ticket */}
+        <div className="absolute" style={{ left: "2%", bottom: "4%", width: "14%", transform: "rotate(-15deg)" }}>
+          <Image src="/figma/sticker-photo.png" alt="" width={246} height={160}
+            style={{ width: "100%", height: "auto", display: "block" }} />
+        </div>
+
+        {/* Lips */}
+        <div className="absolute" style={{ right: "6%", bottom: "3%", width: "12%", transform: "rotate(8deg)" }}>
+          <Image src="/figma/sticker-a.png" alt="" width={200} height={160}
+            style={{ width: "100%", height: "auto", display: "block" }} />
+        </div>
+
+        {/* ── Lined paper — fixed height, no scroll ── */}
+        <div style={{
+          width: "min(63.4vw, 86vw)",
+          height: "100%",
+          backgroundImage: "url('/figma/paper-lined.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "top left",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.28)",
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+          position: "relative",
+          zIndex: 10,
+        }}>
+          {/* 3A Summerloo — centered */}
+          <div style={{ paddingTop: "2.8%", textAlign: "center", flexShrink: 0 }}>
             <p style={{
-              fontFamily: "'Irish Grover', cursive",
-              fontSize: "clamp(13px, 1.8vw, 28px)",
-              color: "#000",
+              fontFamily: "'Caveat', cursive",
+              fontWeight: 700,
+              fontSize: "clamp(14px, 1.8vw, 28px)",
+              color: "#3a1a1a",
               margin: 0,
+              letterSpacing: "0.05em",
             }}>
               3A Summerloo
             </p>
           </div>
 
-          {/* Quest list — left-padded to clear the star decorations in the paper image */}
+          {/* Quest list */}
           <ul style={{
             listStyle: "none",
             margin: 0,
-            paddingTop: "4%",
+            paddingTop: "3%",
             paddingLeft: "20%",
             paddingRight: "4%",
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            gap: "clamp(10px, 4vw, 60px)",
           }}>
             {quests.map((quest) => (
-              <li
-                key={quest.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: "clamp(12px, 4.5vw, 68px)",
-                }}
-              >
+              <li key={quest.id} style={{ display: "flex", alignItems: "center" }}>
                 <button
                   onClick={() => onToggleComplete(quest.id)}
                   style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
@@ -155,12 +155,12 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
                 >
                   <Checkbox checked={quest.completed} />
                   <span style={{
-                    fontFamily: "'Irish Grover', cursive",
-                    fontSize: "clamp(13px, 2vw, 30px)",
-                    color: "#000",
+                    fontFamily: "'Caveat', cursive",
+                    fontWeight: 700,
+                    fontSize: "clamp(15px, 2vw, 32px)",
+                    color: "#1a1a1a",
                     textDecoration: quest.completed ? "line-through" : "none",
-                    opacity: quest.completed ? 0.5 : 1,
-                    textAlign: "left",
+                    opacity: quest.completed ? 0.45 : 1,
                     whiteSpace: "nowrap",
                   }}>
                     {quest.title}
@@ -169,18 +169,6 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
               </li>
             ))}
           </ul>
-        </div>
-
-        {/* Ticket — bottom left */}
-        <div className="absolute" style={{ left: "3.6%", bottom: "4%", width: "16.3%", transform: "rotate(-15deg)" }}>
-          <Image src="/figma/sticker-photo.png" alt="" width={246} height={160}
-            style={{ width: "100%", height: "auto", display: "block" }} />
-        </div>
-
-        {/* Lips — bottom right */}
-        <div className="absolute" style={{ right: "8%", bottom: "3%", width: "13.2%", transform: "rotate(8deg)" }}>
-          <Image src="/figma/sticker-a.png" alt="" width={200} height={160}
-            style={{ width: "100%", height: "auto", display: "block" }} />
         </div>
       </div>
     </div>
