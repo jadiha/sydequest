@@ -24,41 +24,59 @@ export default function Home() {
   }, []);
 
   return (
-    <AnimatePresence mode="wait">
-      {phase === "splash" ? (
-        <motion.div
-          key="splash"
-          exit={{
-            scale:   [1, 1.04, 0.04],
-            rotate:  [0, -2,   22],
-            y:       [0, 0,    -320],
-            opacity: [1, 1,    0],
-            transition: {
-              duration: 0.65,
-              times: [0, 0.12, 1],
-              ease: "easeIn",
-            },
-          }}
-          style={{ transformOrigin: "center center" }}
-        >
-          <SplashScreen onPlay={() => setPhase("board")} />
-        </motion.div>
-      ) : (
-        <motion.div
-          key="board"
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.45, delay: 0.05, ease: "easeOut" }}
-          style={{ width: "100vw", height: "100vh", overflow: "hidden" }}
-        >
-          <BulletinBoard
-            quests={quests}
-            friends={friends}
-            onToggleComplete={toggleComplete}
-            onDelete={deleteQuest}
-          />
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div style={{ width: "100vw", height: "100vh", overflow: "hidden", position: "relative" }}>
+      {/* Cork board always lives at the base — becomes visible as splash crumples away */}
+      <div style={{
+        position: "absolute", inset: 0, zIndex: 0,
+        backgroundImage: "url('/figma/bg-cork.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }} />
+
+      <AnimatePresence mode="wait">
+        {phase === "splash" ? (
+          <motion.div
+            key="splash"
+            style={{ position: "absolute", inset: 0, zIndex: 10 }}
+            exit={{
+              /* crumple: paper squishes, tumbles, shrinks to a ball, disappears */
+              scale:        [1,    1.03, 0.86, 0.42,  0.05],
+              rotate:       [0,    -1.5,    7,   22,    40],
+              y:            [0,    -6,    14,   -8,   -60],
+              borderRadius: ["0%", "0%", "6%", "28%", "50%"],
+              filter: [
+                "brightness(1)",
+                "brightness(1.02)",
+                "brightness(0.86)",
+                "brightness(0.52)",
+                "brightness(0.05)",
+              ],
+              transition: {
+                duration: 1.0,
+                times: [0, 0.1, 0.36, 0.65, 1],
+                ease: "easeIn",
+              },
+            }}
+          >
+            <SplashScreen onPlay={() => setPhase("board")} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="board"
+            style={{ position: "absolute", inset: 0, zIndex: 5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.35, ease: "easeOut" }}
+          >
+            <BulletinBoard
+              quests={quests}
+              friends={friends}
+              onToggleComplete={toggleComplete}
+              onDelete={deleteQuest}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }

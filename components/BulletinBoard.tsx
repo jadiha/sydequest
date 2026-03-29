@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+
+const letterSpring = { type: "spring" as const, stiffness: 380, damping: 16 };
 import type { Quest, Friend } from "@/lib/types";
 
 interface Props {
@@ -60,19 +62,27 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
       display: "flex",
       flexDirection: "column",
     }}>
-      {/* ── Letters — centered together with a small gap ── */}
+      {/* ── Letters — centered together, each letter interactive ── */}
       <div className="w-full flex justify-center items-end flex-shrink-0"
         style={{ paddingTop: "1vw", gap: "3vw" }}>
         <div className="flex items-end" style={{ gap: "0.15vw" }}>
           {LETTERS_LEFT.map((l, i) => (
-            <Image key={i} src={l.src} alt="" width={200} height={200} priority
-              style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }} />
+            <motion.div key={i} style={{ cursor: "pointer" }}
+              whileHover={{ scale: 1.18, rotate: i % 2 === 0 ? 10 : -10, y: -6 }}
+              transition={letterSpring}>
+              <Image src={l.src} alt="" width={200} height={200} priority
+                style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }} />
+            </motion.div>
           ))}
         </div>
         <div className="flex items-end" style={{ gap: "0.15vw" }}>
           {LETTERS_RIGHT.map((l, i) => (
-            <Image key={i} src={l.src} alt="" width={200} height={200} priority
-              style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }} />
+            <motion.div key={i} style={{ cursor: "pointer" }}
+              whileHover={{ scale: 1.18, rotate: i % 2 === 0 ? -10 : 10, y: -6 }}
+              transition={letterSpring}>
+              <Image src={l.src} alt="" width={200} height={200} priority
+                style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }} />
+            </motion.div>
           ))}
         </div>
       </div>
