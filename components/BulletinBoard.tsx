@@ -155,33 +155,35 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
             </p>
           </div>
 
-          {/* Quest list — spread evenly across the paper */}
+          {/* Quest list — each item height = 1 line-spacing (2.42vw), gap = 3 lines */}
           <ul style={{
             listStyle: "none",
             margin: 0,
             padding: 0,
             paddingLeft: "20%",
             paddingRight: "6%",
-            paddingTop: "2%",
-            paddingBottom: "4%",
+            /* pushes first item to the first content line (~13.5vw from paper top,
+               minus the title block above which is ~6vw) */
+            paddingTop: "8vw",
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-evenly",
+            gap: "7.2vw",
           }}>
             {quests.map((quest) => (
               <li
                 key={quest.id}
                 style={{
                   display: "flex",
-                  alignItems: "center",
-                  height: "clamp(28px, 3vw, 46px)",
+                  alignItems: "flex-end",
+                  /* exactly one line-spacing tall so flex-end = baseline on rule */
+                  height: "2.42vw",
                 }}
               >
                 <button
                   onClick={() => onToggleComplete(quest.id)}
                   style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
-                    display: "flex", alignItems: "center" }}
+                    display: "flex", alignItems: "flex-end" }}
                 >
                   <Checkbox checked={quest.completed} />
                   <span style={{
