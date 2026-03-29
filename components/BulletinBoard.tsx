@@ -174,15 +174,14 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
                 key={quest.id}
                 style={{
                   display: "flex",
-                  alignItems: "flex-end",
+                  alignItems: "center",
                   height: "clamp(28px, 3vw, 46px)",
-                  paddingBottom: "0.3vw",
                 }}
               >
                 <button
                   onClick={() => onToggleComplete(quest.id)}
                   style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
-                    display: "flex", alignItems: "flex-end" }}
+                    display: "flex", alignItems: "center" }}
                 >
                   <Checkbox checked={quest.completed} />
                   <span style={{

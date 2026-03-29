@@ -6,6 +6,15 @@
 
 * { box-sizing: border-box; }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #b87b4e; /* cork fallback so no white bleeds through */
+}
+
 /* ── Cut-out letter chip ────────────────────────────────── */
 .letter-chip {
   display: inline-flex;
