@@ -165,20 +165,19 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
             </p>
           </div>
 
-          {/* Quest list — each item height = 1 line-spacing (2.42vw), gap = 3 lines */}
+          {/* Quest list — items spread across paper lines */}
           <ul style={{
             listStyle: "none",
             margin: 0,
             padding: 0,
             paddingLeft: "20%",
             paddingRight: "6%",
-            /* pushes first item to the first content line (~13.5vw from paper top,
-               minus the title block above which is ~6vw) */
-            paddingTop: "8vw",
+            paddingTop: "4vw",
+            paddingBottom: "3vw",
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            gap: "7.2vw",
+            justifyContent: "space-evenly",
           }}>
             {quests.map((quest) => (
               <li
@@ -186,7 +185,6 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
                 style={{
                   display: "flex",
                   alignItems: "flex-end",
-                  /* exactly one line-spacing tall so flex-end = baseline on rule */
                   height: "2.42vw",
                 }}
               >
