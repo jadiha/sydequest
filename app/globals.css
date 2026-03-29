@@ -123,6 +123,63 @@ body {
 .wiggle   { animation: wiggle 2s ease-in-out infinite; }
 .slide-up { animation: slideUp 0.25s ease; }
 
+/* ── Crumpled paper (splash bg) ─────────────────────────── */
+.crumpled-paper {
+  background-color: #d8d2c6;
+  background-image:
+    radial-gradient(ellipse at 12% 20%, rgba(0,0,0,0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at 78% 12%, rgba(255,255,255,0.30) 0%, transparent 30%),
+    radial-gradient(ellipse at 55% 72%, rgba(0,0,0,0.09) 0%, transparent 38%),
+    radial-gradient(ellipse at 30% 85%, rgba(255,255,255,0.18) 0%, transparent 28%),
+    radial-gradient(ellipse at 88% 50%, rgba(0,0,0,0.08) 0%, transparent 33%),
+    radial-gradient(ellipse at 40% 40%, rgba(255,255,255,0.12) 0%, transparent 25%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+
+/* ── Cork board ──────────────────────────────────────────── */
+.cork-board {
+  background-color: #b8793a;
+  background-image:
+    radial-gradient(ellipse at 18% 28%, rgba(210,150,70,0.55) 0%, transparent 38%),
+    radial-gradient(ellipse at 72% 68%, rgba(140,80,15,0.40) 0%, transparent 33%),
+    radial-gradient(ellipse at 48% 8%,  rgba(215,165,80,0.50) 0%, transparent 28%),
+    radial-gradient(ellipse at 88% 38%, rgba(130,70,10,0.30) 0%, transparent 32%),
+    radial-gradient(ellipse at 5%  70%, rgba(190,120,40,0.40) 0%, transparent 30%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.80' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+}
+
+/* ── Retro PLAY button ───────────────────────────────────── */
+.play-btn {
+  background: linear-gradient(to bottom, #d4822a, #a85a10);
+  color: #fff8e0;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  padding: 9px 32px 11px;
+  border-radius: 4px;
+  border-top:    2px solid #e8a050;
+  border-left:   2px solid #c87030;
+  border-right:  3px solid #7a3808;
+  border-bottom: 4px solid #6a2e04;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.08s, box-shadow 0.08s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.30);
+}
+.play-btn:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+/* ── Push pin ────────────────────────────────────────────── */
+.push-pin {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e8e8e8, #888);
+  border: 1.5px solid #666;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.5);
+}
+
 /* ── Scrollbar ───────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }

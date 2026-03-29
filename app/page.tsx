@@ -1,8 +1,9 @@
 "use client";
 import { useState, useCallback } from "react";
-import QuestPaper      from "@/components/QuestPaper";
-import SydeQuestHero  from "@/components/SydeQuestHero";
-import Toast           from "@/components/Toast";
+import { AnimatePresence, motion } from "framer-motion";
+import SplashScreen   from "@/components/SplashScreen";
+import BulletinBoard  from "@/components/BulletinBoard";
+import Toast          from "@/components/Toast";
 import type { Quest } from "@/lib/types";
 import { SEED_QUESTS, SEED_FRIENDS } from "@/lib/store";
 
@@ -15,14 +16,11 @@ const COMPLETE_TOASTS: Record<string, string> = {
   q6: "we are artists now",
 };
 
-const SE  = { fontFamily: "'Special Elite', cursive" };
-const OSW = { fontFamily: "'Oswald', sans-serif" };
-const PF  = { fontFamily: "'Playfair Display', serif", fontStyle: "italic" as const, fontWeight: 700 };
-
 export default function Home() {
-  const [quests, setQuests] = useState<Quest[]>(SEED_QUESTS);
-  const [friends]           = useState(SEED_FRIENDS);
-  const [toast,  setToast]  = useState<string | null>(null);
+  const [phase,   setPhase]  = useState<"splash" | "board">("splash");
+  const [quests,  setQuests] = useState<Quest[]>(SEED_QUESTS);
+  const [friends]            = useState(SEED_FRIENDS);
+  const [toast,   setToast]  = useState<string | null>(null);
 
   function showToast(msg: string) {
     setToast(msg);
@@ -43,101 +41,45 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen px-4 pt-5 pb-16 flex flex-col items-center gap-5">
-
-      {/* Hero title */}
-      <div className="w-full max-w-md mt-2">
-        <SydeQuestHero />
-      </div>
-
-      {/* Scrapbook board */}
-      <div
-        className="relative w-full"
-        style={{ maxWidth: "440px", padding: "10px 16px 24px" }}
-      >
-        {/* Backing paper — rose, right tilt */}
-        <div
-          className="absolute rounded-sm"
-          style={{
-            top: 14, left: 20, right: -10, bottom: 10,
-            background: "#ffd0e0",
-            transform: "rotate(2.8deg)",
-            boxShadow: "2px 4px 12px rgba(0,0,0,0.10)",
-            zIndex: 1,
-          }}
-        >
-          <div className="absolute bottom-5 right-5 text-right opacity-55">
-            <p style={SE} className="text-[9px] text-rose-900 uppercase tracking-wider">SYDE · 3A</p>
-            <p style={PF} className="text-[13px] text-rose-900">Summer 2026</p>
-          </div>
-          {/* washi tape strip */}
-          <div className="absolute top-3 right-3 w-8 h-3 rounded-sm rotate-[20deg]"
-            style={{ background: "rgba(255,220,80,0.5)" }} />
-        </div>
-
-        {/* Backing paper — sage green, left tilt */}
-        <div
-          className="absolute rounded-sm"
-          style={{
-            top: 8, left: -10, right: 12, bottom: 16,
-            background: "#cceacc",
-            transform: "rotate(-2.2deg)",
-            boxShadow: "2px 4px 12px rgba(0,0,0,0.10)",
-            zIndex: 2,
-          }}
-        >
-          <div className="absolute top-5 left-5 opacity-55">
-            <p style={OSW} className="text-[16px] font-bold text-green-900 leading-none">SYDE</p>
-            <p style={SE} className="text-[9px] text-green-800 mt-0.5">Waterloo, ON</p>
-          </div>
-        </div>
-
-        {/* Backing paper — sky blue */}
-        <div
-          className="absolute rounded-sm"
-          style={{
-            top: 20, left: 14, right: -6, bottom: 22,
-            background: "#c8dff8",
-            transform: "rotate(-1deg) translateX(6px)",
-            boxShadow: "1px 3px 10px rgba(0,0,0,0.08)",
-            zIndex: 3,
-          }}
-        />
-
-        {/* Main quest paper */}
-        <div style={{ position: "relative", zIndex: 10 }}>
-          <QuestPaper
-            quests={quests}
-            friends={friends}
-            termLabel="3A Summer 2026"
-            onToggleComplete={toggleComplete}
-            onDelete={deleteQuest}
-          />
-        </div>
-
-        {/* CSS star decorations — no emoji */}
-        {[
-          { top: -12, right: -8,  rot: "-15deg", zIndex: 20 },
-          { bottom: -12, left: -6, rot: "8deg",  zIndex: 20 },
-          { top: "38%", right: -14, rot: "12deg", zIndex: 20 },
-        ].map((pos, i) => (
-          <span
-            key={i}
-            className="absolute pointer-events-none float select-none text-white/80"
-            style={{
-              ...pos,
-              fontSize: "20px",
-              animationDelay: `${i * 0.5}s`,
-              transform: `rotate(${pos.rot})`,
-              fontFamily: "'Special Elite', cursive",
-            } as React.CSSProperties}
+    <>
+      <AnimatePresence mode="wait">
+        {phase === "splash" ? (
+          <motion.div
+            key="splash"
+            exit={{
+              // crumple: hold → slight bulge → rapid scrunch and throw upward
+              scale:   [1, 1.04, 0.04],
+              rotate:  [0, -2,   22],
+              y:       [0, 0,    -320],
+              opacity: [1, 1,    0],
+              transition: {
+                duration: 0.65,
+                times: [0, 0.12, 1],
+                ease: "easeIn",
+              },
+            }}
+            style={{ transformOrigin: "center center" }}
           >
-            ✦
-          </span>
-        ))}
-      </div>
+            <SplashScreen onPlay={() => setPhase("board")} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="board"
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.45, delay: 0.05, ease: "easeOut" }}
+          >
+            <BulletinBoard
+              quests={quests}
+              friends={friends}
+              onToggleComplete={toggleComplete}
+              onDelete={deleteQuest}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Toast message={toast} />
-    </main>
+    </>
   );
 }
