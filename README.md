@@ -1,4 +1,4 @@
-# SydeQuest ✦
+# SydeQuest - purely web compatible at the momment ✦
 
 > go do things. explore. let your brain expand.
 
