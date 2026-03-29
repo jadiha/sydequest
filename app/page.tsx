@@ -1,7 +1,8 @@
 "use client";
 import { useState, useCallback } from "react";
-import QuestPaper     from "@/components/QuestPaper";
-import Toast          from "@/components/Toast";
+import QuestPaper      from "@/components/QuestPaper";
+import SydeQuestHero  from "@/components/SydeQuestHero";
+import Toast           from "@/components/Toast";
 import type { Quest } from "@/lib/types";
 import { SEED_QUESTS, SEED_FRIENDS } from "@/lib/store";
 
@@ -43,6 +44,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen px-4 pt-5 pb-16 flex flex-col items-center gap-5">
+
+      {/* Hero title */}
+      <div className="w-full max-w-md mt-2">
+        <SydeQuestHero />
+      </div>
 
       {/* Scrapbook board */}
       <div
