@@ -172,7 +172,7 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
             padding: 0,
             paddingLeft: "20%",
             paddingRight: "6%",
-            paddingTop: "4vw",
+            paddingTop: "1.6vw",
             paddingBottom: "3vw",
             flex: 1,
             display: "flex",
