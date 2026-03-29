@@ -151,8 +151,8 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
           position: "relative",
           zIndex: 10,
         }}>
-          {/* 3A Summerloo — sits on first ruled line (~9% from top) */}
-          <div style={{ paddingTop: "6.2%", textAlign: "center", flexShrink: 0 }}>
+          {/* 3A Summerloo — baseline on the header rule */}
+          <div style={{ paddingTop: "9.8%", textAlign: "center", flexShrink: 0 }}>
             <p style={{
               fontFamily: "var(--font-special-elite), 'Special Elite', monospace",
               fontSize: "clamp(14px, 1.8vw, 28px)",
