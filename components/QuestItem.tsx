@@ -12,17 +12,16 @@ interface Props {
 type Variant = "plain" | "highlight" | "underline" | "tilted";
 const VARIANTS: Variant[] = ["highlight", "plain", "underline", "plain", "tilted", "plain"];
 
-// Playfair Display italic is the editorial anchor for the whole list.
-// Vary only weight and size — not the font family. Consistency > chaos here.
+// Irish Grover matches the Figma design exactly
 const ITEM_STYLES = [
-  { size: "23px", weight: 700, italic: true  },
-  { size: "19px", weight: 400, italic: true  },
-  { size: "25px", weight: 400, italic: true  },
-  { size: "20px", weight: 700, italic: true  },
-  { size: "22px", weight: 400, italic: true  },
-  { size: "21px", weight: 700, italic: true  },
-  { size: "24px", weight: 400, italic: true  },
-  { size: "20px", weight: 700, italic: true  },
+  { size: "22px", weight: 400, italic: false },
+  { size: "20px", weight: 400, italic: false },
+  { size: "24px", weight: 400, italic: false },
+  { size: "21px", weight: 400, italic: false },
+  { size: "22px", weight: 400, italic: false },
+  { size: "20px", weight: 400, italic: false },
+  { size: "23px", weight: 400, italic: false },
+  { size: "21px", weight: 400, italic: false },
 ];
 
 // Deep editorial ink colors — like a printed magazine, not pastel
@@ -72,10 +71,10 @@ export default function QuestItem({ quest, index, onToggleComplete, onDelete }: 
             onClick={onToggleComplete}
             className="text-left w-full cursor-pointer leading-snug focus:outline-none"
             style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Irish Grover', cursive",
               fontSize: style.size,
               fontWeight: style.weight,
-              fontStyle: "italic",
+              fontStyle: "normal",
               color: quest.completed ? "#ccc" : color,
               textDecoration: quest.completed ? "line-through" : "none",
               textDecorationColor: "rgba(160,40,60,0.35)",

@@ -12,8 +12,7 @@ const COMPLETE_TOASTS: Record<string, string> = {
   q2: "market girlies!!",
   q3: "Tour de Waterloo!!",
   q4: "GRANNY GANG RISE UP",
-  q5: "golden hour unlocked",
-  q6: "we are artists now",
+  q5: "grad house gang!!",
 };
 
 export default function Home() {
