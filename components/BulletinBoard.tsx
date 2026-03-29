@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import type { Quest, Friend } from "@/lib/types";
 
 interface Props {
@@ -59,16 +60,15 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
       display: "flex",
       flexDirection: "column",
     }}>
-      {/* ── Letters ── */}
-      <div className="w-full flex items-end flex-shrink-0"
-        style={{ paddingTop: "1vw", paddingLeft: "0.3vw", paddingRight: "0.3vw" }}>
+      {/* ── Letters — centered together with a small gap ── */}
+      <div className="w-full flex justify-center items-end flex-shrink-0"
+        style={{ paddingTop: "1vw", gap: "3vw" }}>
         <div className="flex items-end" style={{ gap: "0.15vw" }}>
           {LETTERS_LEFT.map((l, i) => (
             <Image key={i} src={l.src} alt="" width={200} height={200} priority
               style={{ height: `${l.hvw}vw`, width: "auto", objectFit: "contain", display: "block" }} />
           ))}
         </div>
-        <div style={{ flex: 1 }} />
         <div className="flex items-end" style={{ gap: "0.15vw" }}>
           {LETTERS_RIGHT.map((l, i) => (
             <Image key={i} src={l.src} alt="" width={200} height={200} priority
@@ -82,28 +82,50 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
         style={{ padding: "1.5vw 0 3vw" }}>
 
         {/* Flowers */}
-        <div className="absolute" style={{ left: "0%", top: "0%", width: "13%" }}>
+        <motion.div
+          className="absolute"
+          style={{ left: "0%", top: "0%", width: "13%" }}
+          whileHover={{ rotate: 8, scale: 1.06 }}
+          transition={{ type: "spring", stiffness: 280, damping: 18 }}
+        >
           <Image src="/figma/sticker-e.png" alt="" width={206} height={500}
             style={{ width: "100%", height: "auto", display: "block" }} />
-        </div>
+        </motion.div>
 
         {/* Spiderman */}
-        <div className="absolute" style={{ right: "0%", top: "5%", width: "19%" }}>
+        <motion.div
+          className="absolute"
+          style={{ right: "0%", top: "5%", width: "19%" }}
+          whileHover={{ rotate: -5, scale: 1.06 }}
+          transition={{ type: "spring", stiffness: 280, damping: 18 }}
+        >
           <Image src="/figma/sticker-c.png" alt="" width={352} height={400}
             style={{ width: "100%", height: "auto", display: "block" }} />
-        </div>
+        </motion.div>
 
         {/* Ticket */}
-        <div className="absolute" style={{ left: "2%", bottom: "4%", width: "14%", transform: "rotate(-15deg)" }}>
+        <motion.div
+          className="absolute"
+          style={{ left: "2%", bottom: "4%", width: "14%" }}
+          initial={{ rotate: -15, scale: 1 }}
+          whileHover={{ rotate: -8, scale: 1.08 }}
+          transition={{ type: "spring", stiffness: 280, damping: 18 }}
+        >
           <Image src="/figma/sticker-photo.png" alt="" width={246} height={160}
             style={{ width: "100%", height: "auto", display: "block" }} />
-        </div>
+        </motion.div>
 
         {/* Lips */}
-        <div className="absolute" style={{ right: "6%", bottom: "3%", width: "12%", transform: "rotate(8deg)" }}>
+        <motion.div
+          className="absolute"
+          style={{ right: "6%", bottom: "3%", width: "12%" }}
+          initial={{ rotate: 8, scale: 1 }}
+          whileHover={{ rotate: 16, scale: 1.08 }}
+          transition={{ type: "spring", stiffness: 280, damping: 18 }}
+        >
           <Image src="/figma/sticker-a.png" alt="" width={200} height={160}
             style={{ width: "100%", height: "auto", display: "block" }} />
-        </div>
+        </motion.div>
 
         {/* ── Lined paper — fixed height, no scroll ── */}
         <div style={{
@@ -119,8 +141,8 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
           position: "relative",
           zIndex: 10,
         }}>
-          {/* 3A Summerloo — centered */}
-          <div style={{ paddingTop: "2.8%", textAlign: "center", flexShrink: 0 }}>
+          {/* 3A Summerloo — sits on first ruled line (~9% from top) */}
+          <div style={{ paddingTop: "6.2%", textAlign: "center", flexShrink: 0 }}>
             <p style={{
               fontFamily: "'Shadows Into Light', cursive",
               fontWeight: 700,
@@ -128,30 +150,39 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
               color: "#3a1a1a",
               margin: 0,
               letterSpacing: "0.05em",
+              lineHeight: 1,
             }}>
               3A Summerloo
             </p>
           </div>
 
-          {/* Quest list */}
+          {/* Quest list — each item sits on a ruled line */}
           <ul style={{
             listStyle: "none",
             margin: 0,
-            paddingTop: "3%",
+            padding: 0,
             paddingLeft: "20%",
             paddingRight: "4%",
+            paddingTop: "3.2%",
             flex: 1,
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-start",
-            gap: "clamp(10px, 4vw, 60px)",
           }}>
             {quests.map((quest) => (
-              <li key={quest.id} style={{ display: "flex", alignItems: "center" }}>
+              <li
+                key={quest.id}
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  /* each li is exactly one line-height tall so text baseline sits on the rule */
+                  height: "clamp(28px, 3vw, 46px)",
+                  paddingBottom: "0.15vw",
+                }}
+              >
                 <button
                   onClick={() => onToggleComplete(quest.id)}
                   style={{ background: "none", border: "none", padding: 0, cursor: "pointer",
-                    display: "flex", alignItems: "center" }}
+                    display: "flex", alignItems: "flex-end" }}
                 >
                   <Checkbox checked={quest.completed} />
                   <span style={{
@@ -162,6 +193,7 @@ export default function BulletinBoard({ quests, friends, onToggleComplete, onDel
                     textDecoration: quest.completed ? "line-through" : "none",
                     opacity: quest.completed ? 0.45 : 1,
                     whiteSpace: "nowrap",
+                    lineHeight: 1,
                   }}>
                     {quest.title}
                   </span>
